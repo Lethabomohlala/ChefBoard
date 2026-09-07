@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Alert,
   StyleSheet,
   Text,
   View,
@@ -8,37 +9,57 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
+import { useMenu } from "../../MenuContext";
 
 export default function Home() {
   const router = useRouter();
-  const menuItems = [
-    {
-      id: "1",
-      name: "Fig, burrata &\nprosciutto tartine",
-      price: "R90.00",
-      course: "Starter",
-      description:
-        "Larger, relatively easy sourdough tartine starter slices",
-    },
-    {
-      id: "2",
-      name: "Authentic\ncarbonara",
-      price: "R150.00",
-      course: "Main",
-      description:
-        "A tried-and-true carbonara recipe that produces a perfect sauce",
-    },
-    {
-      id: "3",
-      name: "Ultimate\nchocolate cake slice",
-      price: "R75.00",
-      course: "Dessert",
-      description: "Chocolate ganache cake recipe that is moist and rich",
-    },
-  ];
+
+  const {
+    menuItems,
+    clearMenu,
+  } = useMenu();
+
+  // COURSE COUNTS
+
+  const starters = menuItems.filter(
+    (item) => item.course === "Starter"
+  ).length;
+
+  const mains = menuItems.filter(
+    (item) => item.course === "Main Course"
+  ).length;
+
+  const desserts = menuItems.filter(
+    (item) => item.course === "Dessert"
+  ).length;
+
+  // CLEAR MENU
+
+  const handleClearMenu = () => {
+    Alert.alert(
+      "Clear Menu",
+      "Are you sure you want to remove all menu items?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Clear",
+          style: "destructive",
+          onPress: () => {
+            clearMenu();
+          },
+        },
+      ]
+    );
+  };
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={["top"]}>
+    <SafeAreaView
+      style={styles.safeArea}
+      edges={["top"]}
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
@@ -46,7 +67,9 @@ export default function Home() {
         {/* HEADER */}
 
         <View style={styles.header}>
-          <Text style={styles.mainHeading}>CHEFBOARD MENU</Text>
+          <Text style={styles.mainHeading}>
+            CHEFBOARD MENU
+          </Text>
 
           <Text style={styles.welcomeText}>
             WELCOME BACK CHEF!
@@ -58,30 +81,43 @@ export default function Home() {
         {/* COURSE COUNTS */}
 
         <View style={styles.courseRow}>
+          {/* STARTERS */}
+
           <View style={styles.courseCard}>
-            <Text style={styles.courseNumber}>1</Text>
+            <Text style={styles.courseNumber}>
+              {starters}
+            </Text>
 
             <Text style={styles.courseName}>
               Starters
             </Text>
           </View>
 
+          {/* MAIN COURSE */}
+
           <View style={styles.courseCard}>
-            <Text style={styles.courseNumber}>1</Text>
+            <Text style={styles.courseNumber}>
+              {mains}
+            </Text>
 
             <Text style={styles.courseName}>
               Main Course
             </Text>
           </View>
 
+          {/* DESSERT */}
+
           <View style={styles.courseCard}>
-            <Text style={styles.courseNumber}>1</Text>
+            <Text style={styles.courseNumber}>
+              {desserts}
+            </Text>
 
             <Text style={styles.courseName}>
               Dessert
             </Text>
           </View>
         </View>
+
 
         {/* MENU TITLE */}
 
@@ -90,59 +126,112 @@ export default function Home() {
             ALL MENU ITEMS
           </Text>
 
-          <Pressable style={styles.smallAddButton}
-           onPress={() => router.push("/(tabs)/add")}
+          <Pressable
+            style={styles.smallAddButton}
+            onPress={() =>
+              router.push("/(tabs)/add")
+            }
           >
-            <Text style={styles.plus}>+</Text>
+            <Text style={styles.plus}>
+              +
+            </Text>
           </Pressable>
         </View>
 
         {/* MENU ITEMS */}
 
-        <View style={styles.menuList}>
-  {menuItems.map((item) => (
-    <Pressable
-      key={item.id}
-      style={styles.menuCard}
-      onPress={() => router.push("/dishdetails")}
-    >
+        {menuItems.length === 0 ? (
+          /* EMPTY MENU */
 
-      {/* IMAGE */}
+          <View style={styles.emptyCard}>
+            <Text style={styles.emptyTitle}>
+              NO MENU ITEMS YET
+            </Text>
 
-      <View style={styles.imagePlaceholder}>
-        <Text style={styles.imageText}>
-          IMAGE
-        </Text>
-      </View>
+            <Text style={styles.emptyText}>
+              Add your first dish to build your
+              menu.
+            </Text>
+          </View>
+        ) : (
+          /* MENU LIST */
 
-      {/* INFORMATION */}
+          <View style={styles.menuList}>
+            {menuItems.map((item) => (
+              <Pressable
+                key={item.id}
+                onPress={() =>
+                  router.push({
+                    pathname: "/dishdetails",
+                    params: { id: item.id },
+                  })
+                }
+                style={({ pressed }) => [
+                  styles.menuCard,
+                  pressed && styles.menuCardPressed,
+                ]}
+              >
+                {/* IMAGE */}
 
-      <View style={styles.menuInfo}>
+                <View
+                  style={styles.imagePlaceholder}
+                >
+                  <Text style={styles.imageText}>
+                    IMAGE
+                  </Text>
+                </View>
 
-        <View style={styles.namePriceRow}>
+                {/* INFORMATION */}
 
-          <Text style={styles.itemName}>
-            {item.name}
-          </Text>
+                <View style={styles.menuInfo}>
+                  <View
+                    style={styles.namePriceRow}
+                  >
+                    {/* DISH NAME */}
 
-          <Text style={styles.itemPrice}>
-            {item.price}
-          </Text>
+                    <Text style={styles.itemName}>
+                      {item.dishName}
+                    </Text>
 
-        </View>
+                    {/* PRICE */}
 
-        <Text style={styles.itemCourse}>
-          {item.course}
-        </Text>
+                    <Text style={styles.itemPrice}>
+                      R{item.price}
+                    </Text>
+                  </View>
 
-        <Text style={styles.itemDescription}>
-          {item.description}
-        </Text>
+                  {/* COURSE */}
 
-      </View>
-    </Pressable>
-     ))}
-        </View>
+                  <Text style={styles.itemCourse}>
+                    {item.course}
+                  </Text>
+
+                  {/* DESCRIPTION */}
+
+                  <Text
+                    style={styles.itemDescription}
+                  >
+                    {item.description}
+                  </Text>
+                </View>
+              </Pressable>
+            ))}
+          </View>
+        )}
+        
+        {/* CLEAR MENU */}
+
+        {menuItems.length > 0 && (
+          <Pressable
+            style={styles.clearButton}
+            onPress={handleClearMenu}
+          >
+            <Text style={styles.clearButtonText}>
+              CLEAR MENU
+            </Text>
+          </Pressable>
+        )}
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -151,6 +240,8 @@ export default function Home() {
 /* STYLES */
 
 const styles = StyleSheet.create({
+  /* PAGE */
+
   safeArea: {
     flex: 1,
     backgroundColor: "#D7ECF1",
@@ -169,19 +260,19 @@ const styles = StyleSheet.create({
   },
 
   mainHeading: {
-  fontFamily: "Boldonse",
-  fontSize: 30,
-  color: "#010000",
-  textAlign: "center",
-},
+    fontFamily: "Boldonse",
+    fontSize: 30,
+    color: "#010000",
+    textAlign: "center",
+  },
 
   welcomeText: {
-  fontFamily: "PlusJakartaSans-Regular",
-  fontSize: 18,
-  color: "#000000",
-  textAlign: "center",
-  marginTop: 20,
-},
+    fontFamily: "PlusJakartaSans-Regular",
+    fontSize: 18,
+    color: "#000000",
+    textAlign: "center",
+    marginTop: 20,
+  },
 
   divider: {
     width: "100%",
@@ -224,7 +315,28 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  /*  MENU TITLE */
+  /* CLEAR MENU */
+
+  clearButton: {
+    backgroundColor: "#654D45",
+    borderWidth: 1,
+    borderColor: "#000000",
+    borderRadius: 25,
+    height: 42,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 25,
+    marginBottom: 5,
+  },
+
+  clearButtonText: {
+    fontFamily: "PlusJakartaSans-Regular",
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#FFFFFF",
+  },
+
+  /* MENU TITLE */
 
   menuTitleRow: {
     flexDirection: "row",
@@ -257,6 +369,33 @@ const styles = StyleSheet.create({
     lineHeight: 25,
   },
 
+  /* EMPTY MENU */
+
+  emptyCard: {
+    backgroundColor: "#FFFFFF",
+    borderWidth: 0.5,
+    borderColor: "#000000",
+    borderRadius: 20,
+    paddingVertical: 35,
+    paddingHorizontal: 25,
+    alignItems: "center",
+  },
+
+  emptyTitle: {
+    fontFamily: "Boldonse",
+    fontSize: 18,
+    color: "#000000",
+    marginBottom: 10,
+  },
+
+  emptyText: {
+    fontFamily: "PlusJakartaSans-Regular",
+    fontSize: 14,
+    color: "#000000",
+    textAlign: "center",
+    lineHeight: 20,
+  },
+
   /* MENU LIST */
 
   menuList: {
@@ -274,8 +413,11 @@ const styles = StyleSheet.create({
     padding: 16,
     flexDirection: "row",
   },
+  menuCardPressed:  {
+    backgroundColor: "#F6E8A6",
+  },
 
-  /*  IMAGE  */
+  /* IMAGE */
 
   imagePlaceholder: {
     width: 130,
@@ -308,32 +450,32 @@ const styles = StyleSheet.create({
   },
 
   itemName: {
-  flex: 1,
-  fontFamily: "PlusJakartaSans-ExtraBold",
-  fontSize: 18,
-  color: "#000000",
-  lineHeight: 21,
-  paddingRight: 8,
-},
+    flex: 1,
+    fontFamily: "PlusJakartaSans-ExtraBold",
+    fontSize: 18,
+    color: "#000000",
+    lineHeight: 21,
+    paddingRight: 8,
+  },
 
-itemPrice: {
-  fontFamily: "PlusJakartaSans-ExtraBold",
-  fontSize: 16,
-  color: "#000000",
-},
+  itemPrice: {
+    fontFamily: "PlusJakartaSans-ExtraBold",
+    fontSize: 16,
+    color: "#000000",
+  },
 
-itemCourse: {
-  fontFamily: "PlusJakartaSans-SemiBoldItalic",
-  fontSize: 16,
-  color: "#000000",
-  marginTop: 9,
-  marginBottom: 5,
-},
+  itemCourse: {
+    fontFamily: "PlusJakartaSans-SemiBoldItalic",
+    fontSize: 16,
+    color: "#000000",
+    marginTop: 9,
+    marginBottom: 5,
+  },
 
-itemDescription: {
-  fontFamily: "PlusJakartaSans-Regular",
-  fontSize: 14,
-  color: "#000000",
-  lineHeight: 19,
-},
+  itemDescription: {
+    fontFamily: "PlusJakartaSans-Regular",
+    fontSize: 14,
+    color: "#000000",
+    lineHeight: 19,
+  },
 });

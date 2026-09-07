@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
   Alert,
@@ -9,28 +10,26 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
 import Svg, { Path } from "react-native-svg";
+import { useMenu } from "../../MenuContext";
 
 export default function Add() {
   const router = useRouter();
+
+  const { addMenuItem } = useMenu();
 
   const [dishName, setDishName] = useState("");
   const [description, setDescription] = useState("");
   const [course, setCourse] = useState("");
   const [price, setPrice] = useState("");
-
   const [showCourses, setShowCourses] = useState(false);
 
-  const courses = [
-    "Starter",
-    "Main Course",
-    "Dessert",
-  ];
+  const courses = ["Starter", "Main Course", "Dessert"];
 
-  // SAVE DISH
+
+    // CREATE NEW MENU ITEM
   const saveDish = () => {
-    if (!dishName || !description || !course || !price) {
+    if (!dishName.trim() || !description.trim() || !course || !price.trim()) {
       Alert.alert(
         "Incomplete Form",
         "Please complete all required fields."
@@ -38,9 +37,33 @@ export default function Add() {
       return;
     }
 
+    const newDish = {
+      id: Date.now().toString(),
+      dishName: dishName.trim(),
+      description: description.trim(),
+      course,
+      price: price.trim(),
+      dateAdded: new Date().toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      }),
+    };
+
+    // Add the dish to the menu
+    addMenuItem(newDish);
+
+    // CLEAR THE FORM
+    setDishName("");
+    setDescription("");
+    setCourse("");
+    setPrice("");
+    setShowCourses(false);
+
+    // Show confirmation
     Alert.alert(
       "Dish Saved",
-      `${dishName} has been added to your menu.`,
+      `${newDish.dishName} has been added to your menu.`,
       [
         {
           text: "OK",
@@ -52,10 +75,7 @@ export default function Add() {
 
   // ADD PHOTO
   const addPhoto = () => {
-    Alert.alert(
-      "Add Photo",
-      "Photo selection will be added here."
-    );
+    Alert.alert("Add Photo", "Photo selection will be added here.");
   };
 
   return (
@@ -67,9 +87,7 @@ export default function Add() {
       >
         {/* TITLE */}
 
-        <Text style={styles.title}>
-          ADD MENU ITEM
-        </Text>
+        <Text style={styles.title}>ADD MENU ITEM</Text>
 
         <Text style={styles.subtitle}>
           Build your menu, one dish at a time.
@@ -83,21 +101,15 @@ export default function Add() {
           activeOpacity={0.8}
         >
           <View style={styles.photoIcon}>
-            <Text style={styles.photoIconText}>
-              ♧
-            </Text>
+            <Text style={styles.photoIconText}>♧</Text>
           </View>
 
-          <Text style={styles.photoText}>
-            Add Photo (optional)
-          </Text>
+          <Text style={styles.photoText}>Add Photo (optional)</Text>
         </TouchableOpacity>
 
         {/* DISH NAME */}
 
-        <Text style={styles.label}>
-          Dish Name*
-        </Text>
+        <Text style={styles.label}>Dish Name*</Text>
 
         <TextInput
           style={styles.input}
@@ -109,15 +121,10 @@ export default function Add() {
 
         {/* DESCRIPTION */}
 
-        <Text style={styles.label}>
-          Description*
-        </Text>
+        <Text style={styles.label}>Description*</Text>
 
         <TextInput
-          style={[
-            styles.input,
-            styles.descriptionInput,
-          ]}
+          style={[styles.input, styles.descriptionInput]}
           placeholder="Describe the dish..."
           placeholderTextColor="#B4B6BE"
           value={description}
@@ -128,45 +135,30 @@ export default function Add() {
 
         {/* COURSE */}
 
-        <Text style={styles.label}>
-          Course*
-        </Text>
+        <Text style={styles.label}>Course*</Text>
 
         <TouchableOpacity
           style={styles.dropdown}
-          onPress={() =>
-            setShowCourses(!showCourses)
-          }
+          onPress={() => setShowCourses(!showCourses)}
           activeOpacity={0.8}
         >
           <Text
-            style={[
-              styles.dropdownText,
-              !course && styles.placeholderText,
-            ]}
+            style={[styles.dropdownText, !course && styles.placeholderText]}
           >
             {course || "Course"}
           </Text>
-        <Svg
-            width={24}
-            height={24}
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-          <Path
-            d={
-            showCourses
-             ? "M18 15L12 9L6 15"
-             : "M6 9L12 15L18 9"
-          }
-            stroke="#000000"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        />
-        </Svg>
+
+          <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
+            <Path
+              d={showCourses ? "M18 15L12 9L6 15" : "M6 9L12 15L18 9"}
+              stroke="#000000"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </Svg>
         </TouchableOpacity>
-        
+
         {/* COURSE OPTIONS */}
 
         {showCourses && (
@@ -180,9 +172,7 @@ export default function Add() {
                   setShowCourses(false);
                 }}
               >
-                <Text style={styles.courseOptionText}>
-                  {item}
-                </Text>
+                <Text style={styles.courseOptionText}>{item}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -190,13 +180,11 @@ export default function Add() {
 
         {/* PRICE */}
 
-        <Text style={styles.label}>
-          Price*
-        </Text>
+        <Text style={styles.label}>Price*</Text>
 
         <TextInput
           style={styles.input}
-          placeholder="e.g. R150.00"
+          placeholder="What's the damage?"
           placeholderTextColor="#B4B6BE"
           value={price}
           onChangeText={setPrice}
@@ -210,22 +198,8 @@ export default function Add() {
           onPress={saveDish}
           activeOpacity={0.8}
         >
-          <Text style={styles.buttonText}>
-            SAVE DISH
-          </Text>
+          <Text style={styles.buttonText}>SAVE DISH</Text>
         </TouchableOpacity>
-
-        {/* VIEW DISH BUTTON */}
-
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.push("/dishdetails")}
-          activeOpacity={0.8}
-        >
-          <Text style={styles.buttonText}>
-            VIEW DISH
-          </Text>
-        </TouchableOpacity> 
       </ScrollView>
     </SafeAreaView>
   );
@@ -358,12 +332,6 @@ const styles = StyleSheet.create({
     color: "#B4B6BE",
   },
 
-  arrow: {
-    fontSize: 25,
-    color: "#000000",
-    marginTop: -6,
-  },
-
   courseList: {
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
@@ -386,7 +354,7 @@ const styles = StyleSheet.create({
     color: "#111111",
   },
 
-  /* BUTTONS */
+  /* SAVE BUTTON */
 
   saveButton: {
     width: 270,
@@ -399,19 +367,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 3,
-    marginBottom: 30,
-  },
-
-  backButton: {
-    width: 270,
-    height: 49,
-    backgroundColor: "#654D45",
-    borderWidth: 1,
-    borderColor: "#222222",
-    borderRadius: 30,
-    alignSelf: "center",
-    justifyContent: "center",
-    alignItems: "center",
     marginBottom: 80,
   },
 
@@ -421,4 +376,5 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#FFFFFF",
   },
+
 });

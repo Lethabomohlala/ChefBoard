@@ -3,6 +3,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { MenuProvider } from "@/MenuContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,8 +28,12 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaProvider>
-      <Stack screenOptions={{ headerShown: false }} />
-    </SafeAreaProvider>
+    <MenuProvider>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      />
+    </MenuProvider>
   );
 }
