@@ -1,0 +1,38 @@
+import React from "react";
+import { StyleSheet, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+export default function DishDetails() {
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Dish Details</Text>
+
+      <Text style={styles.text}>
+        This is where the selected dish information will appear.
+      </Text>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#DCEFF4",
+    padding: 24,
+  },
+
+  title: {
+    fontFamily: "Boldonse",
+    fontSize: 30,
+    color: "#000000",
+    textAlign: "center",
+  },
+
+  text: {
+    fontFamily: "PlusJakartaSans-Regular",
+    fontSize: 18,
+    color: "#000000",
+    marginTop: 10,
+    textAlign: "center",
+  },
+});
