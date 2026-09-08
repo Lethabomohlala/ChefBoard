@@ -29,14 +29,53 @@ export default function Add() {
 
     // CREATE NEW MENU ITEM
   const saveDish = () => {
-    if (!dishName.trim() || !description.trim() || !course || !price.trim()) {
+    // DISH NAME VALIDATION
+    if (!dishName.trim()) {
       Alert.alert(
-        "Incomplete Form",
-        "Please complete all required fields."
+        "Missing Dish Name",
+        "Please enter a dish name."
       );
       return;
     }
 
+    // DESCRIPTION VALIDATION
+    if (!description.trim()) {
+      Alert.alert(
+        "Missing Description",
+        "Please enter a description for the dish."
+      );
+      return;
+    }
+
+    // COURSE VALIDATION
+    if (!course) {
+      Alert.alert(
+        "Missing Course",
+        "Please select a course."
+      );
+      return;
+    }
+
+    // PRICE VALIDATION
+    const cleanedPrice = price
+      .replace(/R/gi, "")
+      .trim();
+
+    const priceValue = Number(cleanedPrice);
+
+    if (
+      !cleanedPrice ||
+      isNaN(priceValue) ||
+      priceValue <= 0
+    ) {
+      Alert.alert(
+        "Invalid Price",
+        "Please enter a valid price greater than R0."
+      );
+      return;
+    }
+
+    // CREATE NEW DISH
     const newDish = {
       id: Date.now().toString(),
       dishName: dishName.trim(),
