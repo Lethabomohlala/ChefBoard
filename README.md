@@ -1,4 +1,4 @@
-<img src="assets/images/banner.png" alt="ChefBoard Banner" width="100%">
+![ChefBoard Banner](https://raw.githubusercontent.com/Lethabomohlala/ChefBoard/main/assets/images/banner.png)
 
 # ChefBoard App 
 
