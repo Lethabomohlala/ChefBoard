@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="./assets/images/banner.png" alt="ChefBoard Banner" width="100%">
+  <img
+    src="https://github.com/Lethabomohlala/ChefBoard/blob/main/assets/images/banner.png?raw=true"
+    alt="ChefBoard Banner"
+    width="100%"
+  />
 </p>
 
 # ChefBoard App 
