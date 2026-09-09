@@ -1,8 +1,8 @@
-![ChefBoard Banner](https://raw.githubusercontent.com/Lethabomohlala/ChefBoard/main/assets/images/banner.png)
+![ChefBoard Banner](assets/images/banner.png)
 
 # ChefBoard App 
 
-Chefs may create and review their menu items in one location with the help of **ChefBoard**, an easy-to-use mobile menu management application. Through a simple and appealing interface, the app enables chefs to add dishes, arrange them by course, check the specifics of each dish, and manage their menu.
+Chefs may create and review their menu items in one location with the help of **ChefBoard**, an easy-to-use mobile menu management application. Through a simple and appealing interface, the app ena[...]
 
 
 ## App Walkthrough Video
@@ -120,7 +120,7 @@ ChefBoard was designed with simplicity, usability, and visual clarity in mind.
 
 ## Future Improvements
 
-ChefBoard will continue to be improved after the current version. Future development will be divided into short-term improvements and improvements required before the application is released on app stores.
+ChefBoard will continue to be improved after the current version. Future development will be divided into short-term improvements and improvements required before the application is released on a[...]
 
 ### Short-term
 
@@ -157,4 +157,4 @@ ChefBoard will continue to be improved after the current version. Future develop
 
 © 2026 Lethabo Mohlala. All rights reserved.
 
-This project and its source code are intended for educational and project purposes. Unauthorized copying, redistribution, or commercial use of this project is not permitted without permission from the author.
+This project and its source code are intended for educational and project purposes. Unauthorized copying, redistribution, or commercial use of this project is not permitted without permission fro[...]
