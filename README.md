@@ -1,16 +1,14 @@
 <p align="center">
-  <img src="./assets/images/banner.png" alt="ChefBoard Banner" width="100%">
+  <img src="./banner.png" alt="ChefBoard Banner" width="100%">
 </p>
 
-# ChefBoard App 
+# ChefBoard App
 
 Chefs may create and review their menu items in one location with the help of **ChefBoard**, an easy-to-use mobile menu management application. Through a simple and appealing interface, the app ena[...]
-
 
 ## App Walkthrough Video
 
 [ ✦ See What's Cooking ✦ ](YOUTUBE_VIDEO_LINK_HERE)
-
 
 ## Features
 
@@ -23,8 +21,7 @@ Chefs may create and review their menu items in one location with the help of **
 - **Temporary Clear Menu** → Remove all currently stored menu items with a confirmation prompt.
 - **Simple Interface** → A clean visual layout designed for quick menu management.
 
-
-##  Technical Stack
+## Technical Stack
 
 - React Native
 - Expo
@@ -34,8 +31,7 @@ Chefs may create and review their menu items in one location with the help of **
 - React Native SVG
 - Expo Image Picker
 
-
-##  Main Screens
+## Main Screens
 
 ### Home
 
@@ -71,30 +67,31 @@ The dish-details screen displays:
 - Additional dish information
 - Edit and delete actions | functionality with be added later on
 
-###  Dish Photos 
+### Dish Photos
 
-ChefBoard supports optional dish photos. When adding a menu item, the chef can select a photo from the device using Expo Image Picker. 
+ChefBoard supports optional dish photos. When adding a menu item, the chef can select a photo from the device using Expo Image Picker.
 
-The selected image is associated with the menu item and can be displayed on: 
-- The Home screen 
-- The Dish Details screen 
+The selected image is associated with the menu item and can be displayed on:
+
+- The Home screen
+- The Dish Details screen
 
 If no photo is selected, ChefBoard displays the default illustration instead.
 
-###  Menu Data Menu 
+### Menu Data Menu
 
-Items are managed using `MenuContext.tsx`. 
+Items are managed using `MenuContext.tsx`.
 
-Each menu item contains the following information: 
-- Text 
-- id 
-- Dish Name 
-- Description 
-- Course 
-- Price 
-- Date Added 
+Each menu item contains the following information:
+
+- Text
+- id
+- Dish Name
+- Description
+- Course
+- Price
+- Date Added
 - Image
-
 
 ## Design Considerations
 
@@ -109,16 +106,13 @@ ChefBoard was designed with simplicity, usability, and visual clarity in mind.
 - **Dish Photography |** Chefs can optionally add photos to menu items, allowing dishes to be identified visually.
 - **Error Prevention |** Required fields and validation help prevent incomplete or invalid menu items from being added.
 
-
 ## Screens
 
 ![Chefboard Screens](assets/images/appscreens.png)
 
-
 ## Project Structure
 
 ![Chefboard App flow](assets/images/appflow.png)
-
 
 ## Future Improvements
 
@@ -132,7 +126,7 @@ ChefBoard will continue to be improved after the current version. Future develop
 - **Menu Statistics |** Provide useful statistics such as the number of dishes in each course category.
 - **Persistent Data Storage |** Store menu items permanently so that data remains available after closing the application.
 - **Improved Photo Management |** Allow chefs to replace, remove, and manage dish photos more easily.
-- **Improved Form Validation |** Add stronger validation and clearer error messages when entering menu information. 
+- **Improved Form Validation |** Add stronger validation and clearer error messages when entering menu information.
 - **UI Improvements |** Refine layouts, spacing, animations, and responsiveness based on user feedback and testing.
 - **Device Compatibility Testing:** Test the application across different screen sizes and supported devices.
 - **Error Handling:** Add comprehensive error handling for unexpected problems and failed operations.
@@ -145,15 +139,13 @@ ChefBoard will continue to be improved after the current version. Future develop
 - **Menu Sharing |** Allow chefs to share menus digitally with customers or other staff members.
 - **Advanced Analytics |** Provide more detailed insights into menu items and menu performance.
 - **Security |** Protect user data and ensure that sensitive information is handled securely.
-- **User Testing |** Conduct usability testing with potential users and implement improvements based on their feedback. 
-- **App Store Preparation |** Prepare the application icon, screenshots, descriptions, promotional materials, privacy information, and other required store assets. 
+- **User Testing |** Conduct usability testing with potential users and implement improvements based on their feedback.
+- **App Store Preparation |** Prepare the application icon, screenshots, descriptions, promotional materials, privacy information, and other required store assets.
 - **Final Quality Assurance |** Conduct final testing to identify and resolve bugs before release.
-
 
 ## Author
 
 **Lethabo Mohlala**
-
 
 ### Copyright
 
