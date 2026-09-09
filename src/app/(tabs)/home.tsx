@@ -58,11 +58,11 @@ export default function Home() {
 
         <View style={styles.header}></View>
 
-      <Image
-        source={require("../../../assets/images/utencils.png")}
-        style={styles.utencils}
-        resizeMode="contain"
-      />
+        <Image
+          source={require("../../../assets/images/utencils.png")}
+          style={styles.utencils}
+          resizeMode="contain"
+        />
 
         <View style={styles.header}>
           <Text style={styles.mainHeading}>CHEFBOARD MENU</Text>
@@ -221,14 +221,14 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
 
-utencils: {
-  width: "100%",
-  height: 70,
-  alignSelf: "center",
-  marginLeft: -32,
-  marginRight: -32,
-  marginBottom: 0,
-},
+  utencils: {
+    width: "100%",
+    height: 70,
+    alignSelf: "center",
+    marginLeft: -32,
+    marginRight: -32,
+    marginBottom: 0,
+  },
 
   mainHeading: {
     fontFamily: "Boldonse",

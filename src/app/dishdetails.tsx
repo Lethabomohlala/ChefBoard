@@ -282,6 +282,9 @@ const styles = StyleSheet.create({
     position: "relative",
     backgroundColor: "#E14E3E",
     overflow: "hidden",
+    borderWidth: 0.5,
+    borderColor: "#000000",
+
   },
 
   dishPhoto: {
@@ -290,6 +293,8 @@ const styles = StyleSheet.create({
     left: 0,
     width: "100%",
     height: "100%",
+    borderWidth: 0.5,
+    borderColor: "#000000",
   },
 
 
@@ -298,7 +303,10 @@ const styles = StyleSheet.create({
   whipImage: {
     width: 200,
     height: 200,
-    marginTop: 80,
+    position: "absolute",
+    top: 200,
+    left: "50%",
+    transform: [{ translateX: -100 }],  
   },
 
   /* DETAILS */
