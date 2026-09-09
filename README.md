@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="./banner.png" alt="ChefBoard Banner" width="100%">
-</p>
+![ChefBoard Banner](banner.png)
 
 # ChefBoard App
 
