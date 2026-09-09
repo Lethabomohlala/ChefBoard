@@ -7,6 +7,7 @@ export type MenuItem = {
   course: string;
   price: string;
   dateAdded: string;
+  image?: string;
 };
 
 type MenuContextType = {

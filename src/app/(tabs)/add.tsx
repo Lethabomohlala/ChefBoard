@@ -4,6 +4,7 @@ import {
   Alert,
   ScrollView,
   StyleSheet,
+  Image,
   Text,
   TextInput,
   TouchableOpacity,
@@ -11,6 +12,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Path } from "react-native-svg";
+import * as ImagePicker from "expo-image-picker";
 import { useMenu } from "../../MenuContext";
 
 export default function Add() {
@@ -23,6 +25,7 @@ export default function Add() {
   const [course, setCourse] = useState("");
   const [price, setPrice] = useState("");
   const [showCourses, setShowCourses] = useState(false);
+  const [photo, setPhoto] = useState<string | null>(null);
 
   const courses = ["Starter", "Main Course", "Dessert"];
 
@@ -82,6 +85,7 @@ export default function Add() {
       description: description.trim(),
       course,
       price: price.trim(),
+      image: photo || undefined,
       dateAdded: new Date().toLocaleDateString("en-GB", {
         day: "2-digit",
         month: "long",
@@ -98,6 +102,7 @@ export default function Add() {
     setCourse("");
     setPrice("");
     setShowCourses(false);
+    setPhoto(null);
 
     // Show confirmation
     Alert.alert(
@@ -113,8 +118,28 @@ export default function Add() {
   };
 
   // ADD PHOTO
-  const addPhoto = () => {
-    Alert.alert("Add Photo", "Photo selection will be added here.");
+    const addPhoto = async () => {
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permissionResult.granted) {
+      Alert.alert(
+        "Permission Required",
+        "Please allow access to your photos to add a dish photo."
+      );
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.8,
+    });
+
+    if (!result.canceled) {
+      setPhoto(result.assets[0].uri);
+    }
   };
 
   return (
@@ -139,11 +164,27 @@ export default function Add() {
           onPress={addPhoto}
           activeOpacity={0.8}
         >
-          <View style={styles.photoIcon}>
-            <Text style={styles.photoIconText}>♧</Text>
-          </View>
+          {photo ? (
+            <>
+              <Image
+                source={{ uri: photo }}
+                style={styles.photoPreview}
+                resizeMode="cover"
+              />
 
-          <Text style={styles.photoText}>Add Photo (optional)</Text>
+              <View style={styles.photoOverlay}>
+                <Text style={styles.photoOverlayText}>CHANGE PHOTO</Text>
+              </View>
+            </>
+          ) : (
+            <>
+              <View style={styles.photoIcon}>
+                <Text style={styles.photoIconText}>♧</Text>
+              </View>
+
+              <Text style={styles.photoText}>Add Photo (optional)</Text>
+            </>
+          )}
         </TouchableOpacity>
 
         {/* DISH NAME */}
@@ -315,6 +356,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#111111",
   },
+
+  photoPreview: {
+  width: "100%",
+  height: "100%",
+  borderRadius: 24,
+},
+
+photoOverlay: {
+  position: "absolute",
+  bottom: 15,
+  backgroundColor: "rgba(0, 0, 0, 0.65)",
+  paddingHorizontal: 18,
+  paddingVertical: 8,
+  borderRadius: 20,
+},
+
+photoOverlayText: {
+  fontFamily: "PlusJakartaSans-ExtraBold",
+  fontSize: 13,
+  color: "#FFFFFF",
+},
 
   /* LABELS */
 

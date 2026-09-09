@@ -73,7 +73,6 @@ export default function DishDetails() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-
         {/* TOP RED IMAGE SECTION */}
 
         <View style={styles.heroSection}>
@@ -99,13 +98,21 @@ export default function DishDetails() {
 
           <Text style={styles.heroTitle}>DISH DETAILS</Text>
 
-          {/* WHISK IMAGE */}
+          {/* DISH PHOTO / WHISK FALLBACK */}
 
-          <Image
-            source={require("../../assets/images/whip.png")}
-            style={styles.whipImage}
-            resizeMode="contain"
-          />
+          {dish.image ? (
+            <Image
+              source={{ uri: dish.image }}
+              style={styles.dishPhoto}
+              resizeMode="cover"
+            />
+          ) : (
+            <Image
+              source={require("../../assets/images/whip.png")}
+              style={styles.whipImage}
+              resizeMode="contain"
+            />
+          )}
         </View>
 
         {/* DISH INFORMATION */}
@@ -273,6 +280,14 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "#FFFFFF",
     textAlign: "right",
+  },
+
+  /* DISH PHOTO */
+
+  dishPhoto: {
+    width: "100%",
+    height: 260,
+    marginTop: 85,
   },
 
   /* WHIP */
