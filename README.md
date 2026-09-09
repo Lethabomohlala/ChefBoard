@@ -1,4 +1,4 @@
-![Chefboard Banner](assets/images/banner.png)
+<img src="assets/images/Banner.png" alt="ChefBoard Banner" width="100%">
 
 # ChefBoard App 
 
