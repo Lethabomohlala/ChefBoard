@@ -1,4 +1,4 @@
-![ChefBoard Banner](./assets/images/banner.jpg)
+![ChefBoard Banner](banner.png)
 
 # ChefBoard App
 
