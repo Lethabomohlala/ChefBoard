@@ -1,37 +1,30 @@
-import React from "react";
+import { useRouter } from "expo-router";
 import {
   Alert,
+  Image,
+  Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  Pressable,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
 import { useMenu } from "../../MenuContext";
 
 export default function Home() {
   const router = useRouter();
 
-  const {
-    menuItems,
-    clearMenu,
-  } = useMenu();
+  const { menuItems, clearMenu } = useMenu();
 
   // COURSE COUNTS
 
-  const starters = menuItems.filter(
-    (item) => item.course === "Starter"
-  ).length;
+  const starters = menuItems.filter((item) => item.course === "Starter").length;
 
   const mains = menuItems.filter(
-    (item) => item.course === "Main Course"
+    (item) => item.course === "Main Course",
   ).length;
 
-  const desserts = menuItems.filter(
-    (item) => item.course === "Dessert"
-  ).length;
+  const desserts = menuItems.filter((item) => item.course === "Dessert").length;
 
   // CLEAR MENU
 
@@ -51,29 +44,30 @@ export default function Home() {
             clearMenu();
           },
         },
-      ]
+      ],
     );
   };
 
   return (
-    <SafeAreaView
-      style={styles.safeArea}
-      edges={["top"]}
-    >
+    <SafeAreaView style={styles.safeArea} edges={["top"]}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
         {/* HEADER */}
 
-        <View style={styles.header}>
-          <Text style={styles.mainHeading}>
-            CHEFBOARD MENU
-          </Text>
+        <View style={styles.header}></View>
 
-          <Text style={styles.welcomeText}>
-            WELCOME BACK CHEF!
-          </Text>
+      <Image
+        source={require("../../../assets/images/utencils.png")}
+        style={styles.utencils}
+        resizeMode="contain"
+      />
+
+        <View style={styles.header}>
+          <Text style={styles.mainHeading}>CHEFBOARD MENU</Text>
+
+          <Text style={styles.welcomeText}>WELCOME BACK CHEF!</Text>
 
           <View style={styles.divider} />
         </View>
@@ -84,57 +78,38 @@ export default function Home() {
           {/* STARTERS */}
 
           <View style={styles.courseCard}>
-            <Text style={styles.courseNumber}>
-              {starters}
-            </Text>
+            <Text style={styles.courseNumber}>{starters}</Text>
 
-            <Text style={styles.courseName}>
-              Starters
-            </Text>
+            <Text style={styles.courseName}>Starters</Text>
           </View>
 
           {/* MAIN COURSE */}
 
           <View style={styles.courseCard}>
-            <Text style={styles.courseNumber}>
-              {mains}
-            </Text>
+            <Text style={styles.courseNumber}>{mains}</Text>
 
-            <Text style={styles.courseName}>
-              Main Course
-            </Text>
+            <Text style={styles.courseName}>Main Course</Text>
           </View>
 
           {/* DESSERT */}
 
           <View style={styles.courseCard}>
-            <Text style={styles.courseNumber}>
-              {desserts}
-            </Text>
+            <Text style={styles.courseNumber}>{desserts}</Text>
 
-            <Text style={styles.courseName}>
-              Dessert
-            </Text>
+            <Text style={styles.courseName}>Dessert</Text>
           </View>
         </View>
-
 
         {/* MENU TITLE */}
 
         <View style={styles.menuTitleRow}>
-          <Text style={styles.sectionHeading}>
-            ALL MENU ITEMS
-          </Text>
+          <Text style={styles.sectionHeading}>ALL MENU ITEMS</Text>
 
           <Pressable
             style={styles.smallAddButton}
-            onPress={() =>
-              router.push("/(tabs)/add")
-            }
+            onPress={() => router.push("/(tabs)/add")}
           >
-            <Text style={styles.plus}>
-              +
-            </Text>
+            <Text style={styles.plus}>+</Text>
           </Pressable>
         </View>
 
@@ -144,13 +119,10 @@ export default function Home() {
           /* EMPTY MENU */
 
           <View style={styles.emptyCard}>
-            <Text style={styles.emptyTitle}>
-              NO MENU ITEMS YET
-            </Text>
+            <Text style={styles.emptyTitle}>NO MENU ITEMS YET</Text>
 
             <Text style={styles.emptyText}>
-              Add your first dish to build your
-              menu.
+              Add your first dish to build your menu.
             </Text>
           </View>
         ) : (
@@ -171,67 +143,49 @@ export default function Home() {
                   pressed && styles.menuCardPressed,
                 ]}
               >
-                {/* IMAGE */}
+                {/* PLACEHOLDER IMAGE */}
 
-                <View
-                  style={styles.imagePlaceholder}
-                >
-                  <Text style={styles.imageText}>
-                    IMAGE
-                  </Text>
+                <View style={styles.imagePlaceholder}>
+                  <Image
+                    source={require("../../../assets/images/whip.png")}
+                    style={styles.whipImage}
+                    resizeMode="contain"
+                  />
                 </View>
 
                 {/* INFORMATION */}
 
                 <View style={styles.menuInfo}>
-                  <View
-                    style={styles.namePriceRow}
-                  >
+                  <View style={styles.namePriceRow}>
                     {/* DISH NAME */}
 
-                    <Text style={styles.itemName}>
-                      {item.dishName}
-                    </Text>
+                    <Text style={styles.itemName}>{item.dishName}</Text>
 
                     {/* PRICE */}
 
-                    <Text style={styles.itemPrice}>
-                      R{item.price}
-                    </Text>
+                    <Text style={styles.itemPrice}>R{item.price}</Text>
                   </View>
 
                   {/* COURSE */}
 
-                  <Text style={styles.itemCourse}>
-                    {item.course}
-                  </Text>
+                  <Text style={styles.itemCourse}>{item.course}</Text>
 
                   {/* DESCRIPTION */}
 
-                  <Text
-                    style={styles.itemDescription}
-                  >
-                    {item.description}
-                  </Text>
+                  <Text style={styles.itemDescription}>{item.description}</Text>
                 </View>
               </Pressable>
             ))}
           </View>
         )}
-        
+
         {/* CLEAR MENU */}
 
         {menuItems.length > 0 && (
-          <Pressable
-            style={styles.clearButton}
-            onPress={handleClearMenu}
-          >
-            <Text style={styles.clearButtonText}>
-              CLEAR MENU
-            </Text>
+          <Pressable style={styles.clearButton} onPress={handleClearMenu}>
+            <Text style={styles.clearButtonText}>CLEAR MENU</Text>
           </Pressable>
         )}
-
       </ScrollView>
     </SafeAreaView>
   );
@@ -256,8 +210,17 @@ const styles = StyleSheet.create({
 
   header: {
     alignItems: "center",
-    paddingTop: 18,
+    paddingTop: 10,
   },
+
+utencils: {
+  width: "100%",
+  height: 70,
+  alignSelf: "center",
+  marginLeft: -32,
+  marginRight: -32,
+  marginBottom: 0,
+},
 
   mainHeading: {
     fontFamily: "Boldonse",
@@ -315,27 +278,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  /* CLEAR MENU */
-
-  clearButton: {
-    backgroundColor: "#654D45",
-    borderWidth: 1,
-    borderColor: "#000000",
-    borderRadius: 25,
-    height: 42,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 25,
-    marginBottom: 5,
-  },
-
-  clearButtonText: {
-    fontFamily: "PlusJakartaSans-Regular",
-    fontSize: 14,
-    fontWeight: "700",
-    color: "#FFFFFF",
-  },
-
   /* MENU TITLE */
 
   menuTitleRow: {
@@ -369,31 +311,32 @@ const styles = StyleSheet.create({
     lineHeight: 25,
   },
 
-  /* EMPTY MENU */
+  /* EMPTY STATE */
 
   emptyCard: {
+    minHeight: 110,
     backgroundColor: "#FFFFFF",
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor: "#000000",
-    borderRadius: 20,
-    paddingVertical: 35,
-    paddingHorizontal: 25,
+    borderRadius: 16,
     alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 20,
   },
 
   emptyTitle: {
     fontFamily: "Boldonse",
-    fontSize: 18,
+    fontSize: 16,
     color: "#000000",
-    marginBottom: 10,
+    textAlign: "center",
+    marginBottom: 8,
   },
 
   emptyText: {
     fontFamily: "PlusJakartaSans-Regular",
-    fontSize: 14,
+    fontSize: 12,
     color: "#000000",
     textAlign: "center",
-    lineHeight: 20,
   },
 
   /* MENU LIST */
@@ -413,28 +356,35 @@ const styles = StyleSheet.create({
     padding: 16,
     flexDirection: "row",
   },
-  menuCardPressed:  {
-    backgroundColor: "#F6E8A6",
+
+  menuCardPressed: {
+    backgroundColor: "#F4F4EC",
   },
 
-  /* IMAGE */
+  /* SELECTED CARD */
+
+  menuCardSelected: {
+    backgroundColor: "#FFFFFF",
+  },
+
+  /* IMAGE PLACEHOLDER */
 
   imagePlaceholder: {
     width: 130,
     height: 150,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#E14E3E",
     borderWidth: 1,
     borderColor: "#000000",
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
     marginRight: 14,
+    overflow: "hidden",
   },
 
-  imageText: {
-    fontFamily: "PlusJakartaSans-Regular",
-    fontSize: 10,
-    color: "#AAAAAA",
+  whipImage: {
+    width: 95,
+    height: 95,
   },
 
   /* MENU INFORMATION */
@@ -477,5 +427,25 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#000000",
     lineHeight: 19,
+  },
+
+  /* CLEAR MENU BUTTON */
+
+  clearButton: {
+    width: "100%",
+    height: 60,
+    backgroundColor: "#644D46",
+    borderWidth: 1.5,
+    borderColor: "#000000",
+    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 25,
+  },
+
+  clearButtonText: {
+    fontFamily: "PlusJakartaSans-ExtraBold",
+    fontSize: 16,
+    color: "#FFFFFF",
   },
 });

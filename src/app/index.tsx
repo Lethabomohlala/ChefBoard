@@ -1,22 +1,45 @@
-import { Link } from "expo-router";
-import { Image, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 export default function Index() {
+  const router = useRouter();
+
   return (
     <SafeAreaView style={styles.container}>
+      
+      {/* LOGO */}
       <Image
         source={require("../../assets/images/logo.png")}
         style={styles.logo}
         resizeMode="contain"
       />
-      <Text style={styles.text}>Welcome to ChefBoard!</Text>
 
-      <View style={styles.button}>
-        <Link href="/(tabs)/home" style={styles.link}>
-          Enter the Kitchen
-        </Link>
-      </View>
+      {/* WELCOME TEXT */}
+      <Text style={styles.text}>
+        Welcome to ChefBoard!
+      </Text>
+
+      {/* ENTER THE KITCHEN BUTTON */}
+      <Pressable
+        style={({ pressed }) => [
+          styles.button,
+          pressed && styles.buttonPressed,
+        ]}
+        onPress={() => router.push("/(tabs)/home")}
+      >
+        <Text style={styles.buttonText}>
+          Enter The Kitchen
+        </Text>
+      </Pressable>
+
     </SafeAreaView>
   );
 }
@@ -29,35 +52,41 @@ const styles = StyleSheet.create({
     backgroundColor: "#51AF7D",
   },
 
-  text: {
-    fontFamily: "Boldonse",
-    fontSize: 20,
-    color: "#FFFFFF",
-    textAlign: "center",
-  },
-
+  /* LOGO */
   logo: {
     width: 200,
     height: 200,
     marginBottom: 20,
   },
 
+  /* WELCOME TEXT */
+  text: {
+    fontFamily: "Boldonse",
+    fontSize: 20,
+    color: "#FFFFFF",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+
+  /* ENTER THE KITCHEN BUTTON */
   button: {
-    backgroundColor: "#51AF7D",
-    borderWidth: 1.5,
-    borderColor: "#FFFFFF",
-    borderRadius: 50,
-    paddingVertical: 14,
-    paddingHorizontal: 32,
-    marginTop: 20,
+    width: 220,
+    height: 50,
+    backgroundColor: "#FFFFFF",
+    borderWidth: 2,
+    borderColor: "#E14E3E",
+    borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
   },
 
-  link: {
-    fontFamily: "PlusJakartaSans-Regular",
-    fontSize: 18,
-    color: "#FFFFFF",
-    textAlign: "center",
+  buttonPressed: {
+    opacity: 0.7,
+  },
+
+  buttonText: {
+    fontFamily: "PlusJakartaSans-SemiBold",
+    fontSize: 14,
+    color: "#E14E3E",
   },
 });
