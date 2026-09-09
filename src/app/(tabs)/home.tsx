@@ -146,11 +146,19 @@ export default function Home() {
                 {/* PLACEHOLDER IMAGE */}
 
                 <View style={styles.imagePlaceholder}>
-                  <Image
-                    source={require("../../../assets/images/whip.png")}
-                    style={styles.whipImage}
-                    resizeMode="contain"
-                  />
+                  {item.image ? (
+                    <Image
+                      source={{ uri: item.image }}
+                      style={styles.dishImage}
+                      resizeMode="cover"
+                    />
+                  ) : (
+                    <Image
+                      source={require("../../../assets/images/whip.png")}
+                      style={styles.whipImage}
+                      resizeMode="contain"
+                    />
+                  )}
                 </View>
 
                 {/* INFORMATION */}
@@ -385,6 +393,12 @@ utencils: {
   whipImage: {
     width: 95,
     height: 95,
+  },
+
+  dishImage: {
+    width: 130,
+    height: 150,
+    borderRadius: 10,
   },
 
   /* MENU INFORMATION */

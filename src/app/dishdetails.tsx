@@ -247,16 +247,20 @@ const styles = StyleSheet.create({
     paddingBottom: 60,
   },
 
-  /* RED HERO SECTION */
+  /* TITLE */
 
-  heroSection: {
-    height: 500,
-    backgroundColor: "#E14E3E",
-    position: "relative",
-    alignItems: "center",
-    justifyContent: "center",
+  heroTitle: {
+    position: "absolute",
+    top: 30,
+    right: 22,
+    fontFamily: "Boldonse",
+    fontSize: 30,
+    color: "#FFFFFF",
+    textAlign: "right",
+    zIndex: 20,
+    elevation: 20,
   },
-
+  
   /* BACK BUTTON */
 
   backButton: {
@@ -269,26 +273,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 10,
   },
+ 
+  /* HERO SECTION */
 
-  /* TITLE */
-
-  heroTitle: {
-    position: "absolute",
-    top: 30,
-    right: 22,
-    fontFamily: "Boldonse",
-    fontSize: 30,
-    color: "#FFFFFF",
-    textAlign: "right",
+  heroSection: {
+    height: 500,
+    width: "100%",
+    position: "relative",
+    backgroundColor: "#E14E3E",
+    overflow: "hidden",
   },
-
-  /* DISH PHOTO */
 
   dishPhoto: {
+    position: "absolute",
+    top: 0,
+    left: 0,
     width: "100%",
-    height: 260,
-    marginTop: 85,
+    height: "100%",
   },
+
 
   /* WHIP */
 

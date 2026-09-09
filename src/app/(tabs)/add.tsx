@@ -85,12 +85,12 @@ export default function Add() {
       description: description.trim(),
       course,
       price: price.trim(),
-      image: photo || undefined,
       dateAdded: new Date().toLocaleDateString("en-GB", {
         day: "2-digit",
         month: "long",
         year: "numeric",
       }),
+      image: photo || undefined,
     };
 
     // Add the dish to the menu
@@ -118,18 +118,7 @@ export default function Add() {
   };
 
   // ADD PHOTO
-    const addPhoto = async () => {
-    const permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-    if (!permissionResult.granted) {
-      Alert.alert(
-        "Permission Required",
-        "Please allow access to your photos to add a dish photo."
-      );
-      return;
-    }
-
+  const addPhoto = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
       allowsEditing: true,
