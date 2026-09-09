@@ -1,4 +1,4 @@
-<img src="assets/images/Banner.png" alt="ChefBoard Banner" width="100%">
+<img src="assets/images/banner.png" alt="ChefBoard Banner" width="100%">
 
 # ChefBoard App 
 
