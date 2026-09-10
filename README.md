@@ -6,7 +6,9 @@ Chefs may create and review their menu items in one location with the help of **
 
 ## App Walkthrough Video
 
-[ ✦ See What's Cooking ✦ ](YOUTUBE_VIDEO_LINK_HERE)
+[ ✦ See What's Cooking ✦ ](https://youtu.be/Lyq6l66Y0UQ?si=sFuyBDnooqxrk-_A)
+
+Remember to change the viewing quaility to 1080p
 
 ## Features
 
@@ -107,10 +109,6 @@ ChefBoard was designed with simplicity, usability, and visual clarity in mind.
 ## Screens
 
 ![Chefboard Screens](assets/images/appscreens.png)
-
-## Project Structure
-
-![Chefboard App flow](assets/images/appflow.png)
 
 ## Future Improvements
 
