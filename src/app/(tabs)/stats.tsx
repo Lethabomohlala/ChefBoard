@@ -20,23 +20,25 @@ export default function Stats() {
 
   // 2. Course counts with explicit typing
   const starterCount = menuItems.filter(
-    (item: { course: string }) => item.course.toLowerCase() === "starter"
+    (item: { course: string }) => item.course.toLowerCase() === "starter",
   ).length;
 
   const mainCourseCount = menuItems.filter(
-    (item: { course: string }) => item.course.toLowerCase() === "main course"
+    (item: { course: string }) => item.course.toLowerCase() === "main course",
   ).length;
 
   const dessertCount = menuItems.filter(
-    (item: { course: string }) => item.course.toLowerCase() === "dessert"
+    (item: { course: string }) => item.course.toLowerCase() === "dessert",
   ).length;
 
   // 3. Average price calculation with explicit typing
   const totalSum = menuItems.reduce(
-    (sum: number, item: { price: number | string }) => sum + Number(item.price || 0),
-    0
+    (sum: number, item: { price: number | string }) =>
+      sum + Number(item.price || 0),
+    0,
   );
-  const averagePrice = totalDishes > 0 ? (totalSum / totalDishes).toFixed(2) : "0.00";
+  const averagePrice =
+    totalDishes > 0 ? (totalSum / totalDishes).toFixed(2) : "0.00";
 
   return (
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
@@ -50,17 +52,17 @@ export default function Stats() {
             style={styles.backButton}
             onPress={() => router.replace("/(tabs)/home")}
           >
-            <Svg width={40} height={40} viewBox="0 0 24 24" fill="none">
+            <Svg width={45} height={45} viewBox="0 0 24 24" fill="none">
               <Path
                 d="M12 8L8 12M8 12L12 16M8 12H16M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
                 stroke="#000000"
-                strokeWidth={1.5}
+                strokeWidth={1.2}
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
             </Svg>
           </Pressable>
-          <Text style={styles.mainTitle}>MENU STATISTICS</Text>
+          <Text style={styles.mainTitle}>STATISTICS</Text>
         </View>
 
         <Text style={styles.subtitle}>
@@ -102,7 +104,9 @@ export default function Stats() {
         </View>
 
         {/* SECTION 3: AVERAGE PRICE */}
-        <Text style={styles.sectionHeading}>Average Price Of All Menu Items</Text>
+        <Text style={styles.sectionHeading}>
+          Average Price Of All Menu Items
+        </Text>
         <View style={styles.averagePriceCard}>
           <Text style={styles.averagePriceText}>R {averagePrice}</Text>
         </View>
@@ -137,7 +141,7 @@ const styles = StyleSheet.create({
   mainTitle: {
     flex: 1,
     fontFamily: "Boldonse",
-    fontSize: 30,
+    fontSize: 40,
     color: "#000000",
     marginTop: 20,
     textAlign: "right",
@@ -147,7 +151,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#000000",
     textAlign: "center",
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: 20,
   },
   sectionHeading: {
