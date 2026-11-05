@@ -130,18 +130,17 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
+      {/* Utencils placed cleanly at the very top */}
+      <Image
+        source={require("../../../assets/images/utencils.png")}
+        style={styles.utencils}
+        resizeMode="contain"
+      />
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        <View style={styles.header}></View>
-
-        <Image
-          source={require("../../../assets/images/utencils.png")}
-          style={styles.utencils}
-          resizeMode="contain"
-        />
-
         <View style={styles.header}>
           <Text style={styles.mainHeading}>CHEFBOARD MENU</Text>
           <Text style={styles.welcomeText}>WELCOME BACK CHEF!</Text>
@@ -209,7 +208,12 @@ export default function Home() {
           <Text style={styles.sectionHeading}>ALL MENU ITEMS</Text>
           <Pressable
             style={styles.smallAddButton}
-            onPress={() => router.push({ pathname: "/(tabs)/add", params: { id: undefined, t: Date.now() } })}
+            onPress={() =>
+              router.push({
+                pathname: "/(tabs)/add",
+                params: { id: undefined, t: Date.now() },
+              })
+            }
           >
             <Text style={styles.plus}>+</Text>
           </Pressable>
@@ -252,6 +256,7 @@ export default function Home() {
                   pressed && styles.menuCardPressed,
                 ]}
               >
+                {/* IMAGE BOX */}
                 <View style={styles.imagePlaceholder}>
                   {item.image ? (
                     <Image
@@ -268,70 +273,61 @@ export default function Home() {
                   )}
                 </View>
 
+                {/* MAIN CONTENT INFO */}
                 <View style={styles.menuInfo}>
                   <View style={styles.namePriceRow}>
-                    <Text style={styles.itemName} numberOfLines={1}>
+                    <Text style={styles.itemName} numberOfLines={2}>
                       {item.dishName}
                     </Text>
                     <Text style={styles.itemPrice}>R{item.price}</Text>
                   </View>
 
-                  <View style={styles.courseActionRow}>
-                    <Text style={styles.itemCourse}>{item.course}</Text>
-                    <View style={styles.actionButtons}>
-                      {/* EDIT ICON BUTTON */}
-                      <Pressable
-                        style={styles.actionIconButton}
-                        onPress={(e) => {
-                          e.stopPropagation();
-                          handleEditItem(item.id);
-                        }}
-                      >
-                        <Svg
-                          width={15}
-                          height={15}
-                          viewBox="0 0 24 24"
-                          fill="none"
-                        >
-                          <Path
-                            d="M11 3.99998H6.8C5.11984 3.99998 4.27976 3.99998 3.63803 4.32696C3.07354 4.61458 2.6146 5.07353 2.32698 5.63801C2 6.27975 2 7.11983 2 8.79998V17.2C2 18.8801 2 19.7202 2.32698 20.362C2.6146 20.9264 3.07354 21.3854 3.63803 21.673C4.27976 22 5.11984 22 6.8 22H15.2C16.8802 22 17.7202 22 18.362 21.673C18.9265 21.3854 19.3854 20.9264 19.673 20.362C20 19.7202 20 18.8801 20 17.2V13M7.99997 16H9.67452C10.1637 16 10.4083 16 10.6385 15.9447C10.8425 15.8957 11.0376 15.8149 11.2166 15.7053C11.4184 15.5816 11.5914 15.4086 11.9373 15.0627L21.5 5.49998C22.3284 4.67156 22.3284 3.32841 21.5 2.49998C20.6716 1.67156 19.3284 1.67155 18.5 2.49998L8.93723 12.0627C8.59133 12.4086 8.41838 12.5816 8.29469 12.7834C8.18504 12.9624 8.10423 13.1574 8.05523 13.3615C7.99997 13.5917 7.99997 13.8363 7.99997 14.3255V16Z"
-                            stroke="#000000"
-                            strokeWidth={1.5}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </Svg>
-                      </Pressable>
+                  <Text style={styles.itemCourse}>{item.course}</Text>
 
-                      {/* DELETE ICON BUTTON */}
-                      <Pressable
-                        style={styles.actionIconButton}
-                        onPress={(e) => {
-                          e.stopPropagation();
-                          handleDeleteItem(item.id, item.dishName);
-                        }}
-                      >
-                        <Svg
-                          width={15}
-                          height={15}
-                          viewBox="0 0 24 24"
-                          fill="none"
-                        >
-                          <Path
-                            d="M9 3H15M3 6H21M19 6L18.2987 16.5193C18.1935 18.0975 18.1409 18.8867 17.8 19.485C17.4999 20.0118 17.0472 20.4353 16.5017 20.6997C15.882 21 15.0911 21 13.5093 21H10.4907C8.90891 21 8.11803 21 7.49834 20.6997C6.95276 20.4353 6.50009 20.0118 6.19998 19.485C5.85911 18.8867 5.8065 18.0975 5.70129 16.5193L5 6M10 10.5V15.5M14 10.5V15.5"
-                            stroke="#000000"
-                            strokeWidth={1.5}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </Svg>
-                      </Pressable>
-                    </View>
-                  </View>
-
-                  <Text style={styles.itemDescription} numberOfLines={2}>
+                  <Text style={styles.itemDescription} numberOfLines={3}>
                     {item.description}
                   </Text>
+                </View>
+
+                {/* RIGHT-SIDE ACTION BUTTONS */}
+                <View style={styles.actionButtonsColumn}>
+                  {/* EDIT ICON BUTTON */}
+                  <Pressable
+                    style={styles.actionIconButton}
+                    onPress={(e) => {
+                      e.stopPropagation();
+                      handleEditItem(item.id);
+                    }}
+                  >
+                    <Svg width={18} height={18} viewBox="0 0 24 24" fill="none">
+                      <Path
+                        d="M11 3.99998H6.8C5.11984 3.99998 4.27976 3.99998 3.63803 4.32696C3.07354 4.61458 2.6146 5.07353 2.32698 5.63801C2 6.27975 2 7.11983 2 8.79998V17.2C2 18.8801 2 19.7202 2.32698 20.362C2.6146 20.9264 3.07354 21.3854 3.63803 21.673C4.27976 22 5.11984 22 6.8 22H15.2C16.8802 22 17.7202 22 18.362 21.673C18.9265 21.3854 19.3854 20.9264 19.673 20.362C20 19.7202 20 18.8801 20 17.2V13M7.99997 16H9.67452C10.1637 16 10.4083 16 10.6385 15.9447C10.8425 15.8957 11.0376 15.8149 11.2166 15.7053C11.4184 15.5816 11.5914 15.4086 11.9373 15.0627L21.5 5.49998C22.3284 4.67156 22.3284 3.32841 21.5 2.49998C20.6716 1.67156 19.3284 1.67155 18.5 2.49998L8.93723 12.0627C8.59133 12.4086 8.41838 12.5816 8.29469 12.7834C8.18504 12.9624 8.10423 13.1574 8.05523 13.3615C7.99997 13.5917 7.99997 13.8363 7.99997 14.3255V16Z"
+                        stroke="#51AF7D"
+                        strokeWidth={1.5}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </Svg>
+                  </Pressable>
+
+                  {/* DELETE ICON BUTTON */}
+                  <Pressable
+                    style={styles.actionIconButton}
+                    onPress={(e) => {
+                      e.stopPropagation();
+                      handleDeleteItem(item.id, item.dishName);
+                    }}
+                  >
+                    <Svg width={18} height={18} viewBox="0 0 24 24" fill="none">
+                      <Path
+                        d="M9 3H15M3 6H21M19 6L18.2987 16.5193C18.1935 18.0975 18.1409 18.8867 17.8 19.485C17.4999 20.0118 17.0472 20.4353 16.5017 20.6997C15.882 21 15.0911 21 13.5093 21H10.4907C8.90891 21 8.11803 21 7.49834 20.6997C6.95276 20.4353 6.50009 20.0118 6.19998 19.485C5.85911 18.8867 5.8065 18.0975 5.70129 16.5193L5 6M10 10.5V15.5M14 10.5V15.5"
+                        stroke="#51AF7D"
+                        strokeWidth={1.5}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </Svg>
+                  </Pressable>
                 </View>
               </Pressable>
             ))}
@@ -375,10 +371,9 @@ const styles = StyleSheet.create({
   },
   utencils: {
     width: "100%",
+    marginTop: 10,
     height: 70,
-    alignSelf: "center",
-    marginLeft: -32,
-    marginRight: -32,
+    backgroundColor: "transparent",
   },
   mainHeading: {
     fontFamily: "Boldonse",
@@ -524,7 +519,7 @@ const styles = StyleSheet.create({
   },
   resetButtonText: {
     fontFamily: "PlusJakartaSans-Bold",
-    fontSize: 12,
+    fontSize: 16,
     color: "#FFFFFF",
   },
   menuList: {
@@ -532,26 +527,27 @@ const styles = StyleSheet.create({
   },
   menuCard: {
     minHeight: 180,
-    backgroundColor: "#51AF7D",
+    backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#000000",
-    borderRadius: 20,
+    borderRadius: 24,
     padding: 16,
     flexDirection: "row",
+    alignItems: "center",
   },
   menuCardPressed: {
-    backgroundColor: "#469A6E",
+    backgroundColor: "#F0F0F0",
   },
   imagePlaceholder: {
-    width: 110,
-    height: 140,
-    backgroundColor: "#E14E3E",
+    width: 105,
+    height: 130,
+    backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#000000",
-    borderRadius: 10,
+    borderRadius: 16,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 14,
+    marginRight: 12,
     overflow: "hidden",
   },
   whipImage: {
@@ -559,66 +555,64 @@ const styles = StyleSheet.create({
     height: 80,
   },
   dishImage: {
-    width: 110,
-    height: 140,
-    borderRadius: 10,
+    width: 105,
+    height: 130,
+    borderRadius: 16,
   },
   menuInfo: {
     flex: 1,
+    justifyContent: "center",
+    paddingRight: 8,
   },
   namePriceRow: {
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "flex-start",
-    justifyContent: "space-between",
+    marginBottom: 5,
   },
   itemName: {
-    flex: 1,
+    width: "100%",
     fontFamily: "PlusJakartaSans-ExtraBold",
-    fontSize: 14,
+    fontSize: 16,
     color: "#000000",
-    lineHeight: 21,
-    paddingRight: 6,
+    lineHeight: 22,
+    marginBottom: 5,
   },
   itemPrice: {
     fontFamily: "PlusJakartaSans-ExtraBold",
-    fontSize: 14,
-    color: "#000000",
-  },
-  courseActionRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 4,
-    marginBottom: 4,
+    fontSize: 16,
+    color: "#51AF7D",
   },
   itemCourse: {
-    fontFamily: "PlusJakartaSans-SemiBoldItalic",
+    fontFamily: "PlusJakartaSans-Bold",
     fontSize: 14,
     color: "#000000",
-  },
-  actionButtons: {
-    flexDirection: "row",
-    gap: 6,
-  },
-  actionIconButton: {
-    width: 28,
-    height: 28,
-    backgroundColor: "#FFFFFF",
-    borderWidth: 1,
-    borderColor: "#000000",
-    borderRadius: 7,
-    justifyContent: "center",
-    alignItems: "center",
+    marginBottom: 5,
   },
   itemDescription: {
     fontFamily: "PlusJakartaSans-Regular",
-    fontSize: 14,
+    fontSize: 13,
     color: "#000000",
-    lineHeight: 18,
+    lineHeight: 17,
+  },
+  actionButtonsColumn: {
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
+    paddingLeft: 4,
+  },
+  actionIconButton: {
+    width: 35,
+    height: 35,
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1,
+    borderColor: "#51AF7D",
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
   resetSearchButton: {
     width: "100%",
-    height: 48,
+    height: 40,
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#000000",
@@ -634,14 +628,15 @@ const styles = StyleSheet.create({
   },
   clearButton: {
     width: "100%",
-    height: 54,
+    height: 40,
     backgroundColor: "#644D46",
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderColor: "#000000",
-    borderRadius: 27,
+    borderRadius: 24,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
+    marginBottom: 100,
   },
   clearButtonText: {
     fontFamily: "PlusJakartaSans-ExtraBold",
