@@ -15,7 +15,7 @@ import { useMenu } from "../MenuContext";
 export default function DishDetails() {
   const router = useRouter();
   const { id } = useLocalSearchParams();
-  const { menuItems } = useMenu();
+  const { menuItems, deleteMenuItem } = useMenu();
 
   const dishId = Array.isArray(id) ? id[0] : id;
 
@@ -44,26 +44,31 @@ export default function DishDetails() {
     );
   }
 
+  // REAL DELETE FUNCTIONALITY
   const handleDelete = () => {
     Alert.alert(
       "Delete Dish",
-      "The delete functionality will be added later.",
+      `Are you sure you want to delete ${dish.dishName}?`,
       [
+        { text: "Cancel", style: "cancel" },
         {
-          text: "OK",
-          style: "default",
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            deleteMenuItem(dish.id);
+            router.replace("/(tabs)/home");
+          },
         },
       ],
     );
   };
 
+  // REAL EDIT FUNCTIONALITY (Navigates to add.tsx pre-filled with this dish ID)
   const handleEdit = () => {
-    Alert.alert("Edit Dish", "The edit functionality will be added later.", [
-      {
-        text: "OK",
-        style: "default",
-      },
-    ]);
+    router.push({
+      pathname: "/(tabs)/add",
+      params: { id: dish.id },
+    });
   };
 
   return (
@@ -74,10 +79,8 @@ export default function DishDetails() {
         contentContainerStyle={styles.scrollContent}
       >
         {/* TOP RED IMAGE SECTION */}
-
         <View style={styles.heroSection}>
           {/* BACK BUTTON */}
-
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => router.replace("/(tabs)/home")}
@@ -87,7 +90,7 @@ export default function DishDetails() {
               <Path
                 d="M12 8L8 12M8 12L12 16M8 12H16M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
                 stroke="#FFFFFF"
-                strokeWidth={2}
+                strokeWidth={1.2}
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
@@ -95,11 +98,9 @@ export default function DishDetails() {
           </TouchableOpacity>
 
           {/* TITLE */}
-
           <Text style={styles.heroTitle}>DISH DETAILS</Text>
 
           {/* DISH PHOTO / WHISK FALLBACK */}
-
           {dish.image ? (
             <Image
               source={{ uri: dish.image }}
@@ -116,30 +117,23 @@ export default function DishDetails() {
         </View>
 
         {/* DISH INFORMATION */}
-
         <View style={styles.detailsSection}>
           {/* NAME + PRICE */}
-
           <View style={styles.namePriceRow}>
             <Text style={styles.dishName}>{dish.dishName}</Text>
-
             <Text style={styles.dishPrice}>R{dish.price}</Text>
           </View>
 
           {/* COURSE */}
-
           <View style={styles.courseBadge}>
             <Text style={styles.courseText}>{dish.course.toUpperCase()}</Text>
           </View>
 
           {/* DESCRIPTION */}
-
           <Text style={styles.descriptionHeading}>Description</Text>
-
           <Text style={styles.description}>{dish.description}</Text>
 
           {/* EXTRA INFORMATION */}
-
           <View style={styles.infoContainer}>
             {/* DATE ADDED */}
             <View style={styles.infoRow}>
@@ -154,7 +148,6 @@ export default function DishDetails() {
                   />
                 </Svg>
               </View>
-
               <Text style={styles.infoText}>ADDED | {dish.dateAdded}</Text>
             </View>
 
@@ -169,7 +162,6 @@ export default function DishDetails() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
-
                   <Path
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -181,7 +173,6 @@ export default function DishDetails() {
                   />
                 </Svg>
               </View>
-
               <Text style={styles.infoText}>POPULAR DISH</Text>
             </View>
 
@@ -198,13 +189,11 @@ export default function DishDetails() {
                   />
                 </Svg>
               </View>
-
               <Text style={styles.infoText}>CREATED BY | CHEF CHRISTOFFEL</Text>
             </View>
           </View>
 
           {/* EDIT BUTTON */}
-
           <TouchableOpacity
             style={styles.editButton}
             onPress={handleEdit}
@@ -214,7 +203,6 @@ export default function DishDetails() {
           </TouchableOpacity>
 
           {/* DELETE BUTTON */}
-
           <TouchableOpacity
             style={styles.deleteButton}
             onPress={handleDelete}
@@ -228,27 +216,19 @@ export default function DishDetails() {
   );
 }
 
-/* STYLES */
-
+/* STYLES (Keep your existing styles below) */
 const styles = StyleSheet.create({
-  /* PAGE */
-
   safeArea: {
     flex: 1,
     backgroundColor: "#D7ECF1",
   },
-
   scrollView: {
     flex: 1,
     backgroundColor: "#D7ECF1",
   },
-
   scrollContent: {
     paddingBottom: 60,
   },
-
-  /* TITLE */
-
   heroTitle: {
     position: "absolute",
     top: 30,
@@ -260,9 +240,6 @@ const styles = StyleSheet.create({
     zIndex: 20,
     elevation: 20,
   },
-  
-  /* BACK BUTTON */
-
   backButton: {
     position: "absolute",
     left: 22,
@@ -273,9 +250,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 10,
   },
- 
-  /* HERO SECTION */
-
   heroSection: {
     height: 500,
     width: "100%",
@@ -284,9 +258,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderWidth: 0.5,
     borderColor: "#000000",
-
   },
-
   dishPhoto: {
     position: "absolute",
     top: 0,
@@ -296,54 +268,40 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: "#000000",
   },
-
-
-  /* WHIP */
-
   whipImage: {
     width: 200,
     height: 200,
     position: "absolute",
     top: 200,
     left: "50%",
-    transform: [{ translateX: -100 }],  
+    transform: [{ translateX: -100 }],
   },
-
-  /* DETAILS */
-
   detailsSection: {
     backgroundColor: "#D7ECF1",
     paddingHorizontal: 22,
     paddingTop: 18,
     paddingBottom: 40,
   },
-
-  /* NAME + PRICE */
-
   namePriceRow: {
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "space-between",
   },
-
   dishName: {
     flex: 1,
     fontFamily: "Boldonse",
-    fontSize: 30,
-    lineHeight: 50,
+    fontSize: 24,
+    lineHeight: 40,
     color: "#000000",
     paddingRight: 12,
   },
-
   dishPrice: {
-    fontFamily: "PlusJakartaSans-Bold",
-    fontSize: 30,
+    fontFamily: "Boldonse",
+    fontSize: 24,
+    lineHeight: 40,
     color: "#000000",
     marginTop: 0,
   },
-
-  /* COURSE */
-
   courseBadge: {
     alignSelf: "flex-start",
     backgroundColor: "#51AF7D",
@@ -354,23 +312,19 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     marginTop: 12,
   },
-
   courseText: {
     fontFamily: "PlusJakartaSans-Semibold",
     fontSize: 16,
     color: "#FFFFFF",
   },
-
-  /* DESCRIPTION */
-
   descriptionHeading: {
     fontFamily: "Boldonse",
     fontSize: 20,
+    lineHeight: 40,
     color: "#000000",
     marginTop: 20,
     marginBottom: 10,
   },
-
   description: {
     fontFamily: "PlusJakartaSans-Semibold",
     fontSize: 18,
@@ -378,74 +332,61 @@ const styles = StyleSheet.create({
     color: "#000000",
     paddingRight: 30,
   },
-
-  /* INFORMATION */
-
   infoContainer: {
     marginTop: 30,
     gap: 10,
   },
-
   infoRow: {
     flexDirection: "row",
     alignItems: "center",
   },
-
   infoIcon: {
     width: 38,
     alignItems: "flex-start",
     justifyContent: "center",
   },
-
   infoText: {
     flex: 1,
     fontFamily: "PlusJakartaSans-Semibold",
     fontSize: 16,
     color: "#000000",
   },
-
-  /* EDIT BUTTON */
-
   editButton: {
-    height: 64,
+    width: 160,
+    height: 40,
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#000000",
-    borderRadius: 35,
-    alignItems: "center",
+    borderRadius: 30,
+    alignSelf: "center",
     justifyContent: "center",
-    marginTop: 38,
-    marginHorizontal: 35,
+    alignItems: "center",
+    marginTop: 30,
+    marginBottom: 20,
   },
-
   editButtonText: {
     fontFamily: "PlusJakartaSans-ExtraBold",
-    fontSize: 18,
+    fontSize: 16,
     color: "#000000",
   },
-
-  /* DELETE BUTTON */
-
   deleteButton: {
-    height: 64,
+    width: 160,
+    height: 40,
     backgroundColor: "#E14E3E",
     borderWidth: 1,
     borderColor: "#000000",
-    borderRadius: 35,
-    alignItems: "center",
+    borderRadius: 30,
+    alignSelf: "center",
     justifyContent: "center",
-    marginTop: 20,
-    marginHorizontal: 35,
+    alignItems: "center",
+    marginBottom: 0,
   },
-
   deleteButtonText: {
     fontFamily: "PlusJakartaSans-ExtraBold",
-    fontSize: 18,
+    fontSize: 16,
+    fontWeight: "500",
     color: "#FFFFFF",
   },
-
-  /* ERROR STATE */
-
   errorContainer: {
     flex: 1,
     backgroundColor: "#D7ECF1",
@@ -453,14 +394,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 30,
   },
-
   errorTitle: {
     fontFamily: "Boldonse",
     fontSize: 25,
     color: "#000000",
     textAlign: "center",
   },
-
   errorText: {
     fontFamily: "PlusJakartaSans-Regular",
     fontSize: 16,
@@ -469,7 +408,6 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 30,
   },
-
   errorButton: {
     backgroundColor: "#71B98A",
     borderWidth: 1.5,
@@ -478,7 +416,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 15,
   },
-
   errorButtonText: {
     fontFamily: "PlusJakartaSans-ExtraBold",
     fontSize: 15,
