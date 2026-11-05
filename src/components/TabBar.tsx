@@ -1,24 +1,10 @@
-import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-} from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import {
-  HomeIcon,
-  AddIcon,
-  StatsIcon,
-  MenuIcon,
-} from "./TabIcons";
+import { router } from "expo-router";
+import { AddIcon, HomeIcon, MenuIcon, StatsIcon } from "./TabIcons";
 
-export default function TabBar({
-  state,
-  descriptors,
-  navigation,
-}: any) {
+export default function TabBar({ state, descriptors, navigation }: any) {
   const insets = useSafeAreaInsets();
 
   return (
@@ -51,25 +37,24 @@ export default function TabBar({
           const label = options.title ?? route.name;
 
           const onPress = () => {
-            const event = navigation.emit({
+            const event = navigation?.emit?.({
               type: "tabPress",
               target: route.key,
               canPreventDefault: true,
             });
 
-            if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate(route.name);
+            if (event?.defaultPrevented) {
+              return;
             }
+
+            router.push(route.name as any);
           };
 
           return (
             <Pressable
               key={route.key}
               onPress={onPress}
-              style={[
-                styles.tab,
-                isFocused && styles.selectedTab,
-              ]}
+              style={[styles.tab, isFocused && styles.selectedTab]}
             >
               {/* CUSTOM SVG ICON */}
               <Icon
@@ -79,11 +64,7 @@ export default function TabBar({
               />
 
               {/* Only show label for selected tab */}
-              {isFocused && (
-                <Text style={styles.selectedLabel}>
-                  {label}
-                </Text>
-              )}
+              {isFocused && <Text style={styles.selectedLabel}>{label}</Text>}
             </Pressable>
           );
         })}
