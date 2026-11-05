@@ -89,7 +89,7 @@ export default function DishDetails() {
             <Svg width={45} height={45} viewBox="0 0 24 24" fill="none">
               <Path
                 d="M12 8L8 12M8 12L12 16M8 12H16M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
-                stroke="#FFFFFF"
+                stroke="#000000"
                 strokeWidth={1.2}
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     right: 22,
     fontFamily: "Boldonse",
     fontSize: 30,
-    color: "#FFFFFF",
+    color: "#000000",
     textAlign: "right",
     zIndex: 20,
     elevation: 20,
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     height: 500,
     width: "100%",
     position: "relative",
-    backgroundColor: "#E14E3E",
+    backgroundColor: "#FAF6EE",
     overflow: "hidden",
     borderWidth: 0.5,
     borderColor: "#000000",
