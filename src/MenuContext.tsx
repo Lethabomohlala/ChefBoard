@@ -13,37 +13,42 @@ export type MenuItem = {
 type MenuContextType = {
   menuItems: MenuItem[];
   addMenuItem: (item: MenuItem) => void;
+  updateMenuItem: (item: MenuItem) => void;
+  deleteMenuItem: (id: string) => void;
   clearMenu: () => void;
 };
 
-const MenuContext = createContext<MenuContextType | undefined>(
-  undefined
-);
+const MenuContext = createContext<MenuContextType | undefined>(undefined);
 
-export function MenuProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function MenuProvider({ children }: { children: React.ReactNode }) {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
 
-const addMenuItem = (item: MenuItem) => {
-  setMenuItems((currentItems) => [
-    ...currentItems,
-    item,
-  ]);
-};
+  const addMenuItem = (item: MenuItem) => {
+    setMenuItems((currentItems) => [...currentItems, item]);
+  };
 
-const clearMenu = () => {
-  setMenuItems([]);
-};
+  const updateMenuItem = (updatedItem: MenuItem) => {
+    setMenuItems((currentItems) =>
+      currentItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+    );
+  };
+
+  const deleteMenuItem = (id: string) => {
+    setMenuItems((currentItems) => currentItems.filter((item) => item.id !== id));
+  };
+
+  const clearMenu = () => {
+    setMenuItems([]);
+  };
 
   return (
     <MenuContext.Provider
       value={{
         menuItems,
         addMenuItem,
-         clearMenu,
+        updateMenuItem,
+        deleteMenuItem,
+        clearMenu,
       }}
     >
       {children}
@@ -55,9 +60,7 @@ export function useMenu() {
   const context = useContext(MenuContext);
 
   if (!context) {
-    throw new Error(
-      "useMenu must be used inside MenuProvider"
-    );
+    throw new Error("useMenu must be used inside MenuProvider");
   }
 
   return context;
