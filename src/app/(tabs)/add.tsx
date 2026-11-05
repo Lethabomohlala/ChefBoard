@@ -172,6 +172,18 @@ export default function Add() {
     }
   };
 
+  // REMOVE PHOTO
+  const removePhoto = () => {
+    Alert.alert("Remove Photo", "Are you sure you want to remove this photo?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Remove",
+        style: "destructive",
+        onPress: () => setPhoto(null),
+      },
+    ]);
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView
@@ -204,8 +216,21 @@ export default function Add() {
                 resizeMode="cover"
               />
 
-              <View style={styles.photoOverlay}>
-                <Text style={styles.photoOverlayText}>CHANGE PHOTO</Text>
+              <View style={styles.photoOverlayContainer}>
+                <View style={styles.photoOverlay}>
+                  <Text style={styles.photoOverlayText}>CHANGE PHOTO</Text>
+                </View>
+
+                {/* REMOVE PHOTO BUTTON */}
+                <TouchableOpacity
+                  style={styles.removePhotoButton}
+                  onPress={(e) => {
+                    e.stopPropagation();
+                    removePhoto();
+                  }}
+                >
+                  <Text style={styles.removePhotoText}>✕</Text>
+                </TouchableOpacity>
               </View>
             </>
           ) : (
@@ -389,9 +414,14 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 24,
   },
-  photoOverlay: {
+  photoOverlayContainer: {
     position: "absolute",
     bottom: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  photoOverlay: {
     backgroundColor: "rgba(0, 0, 0, 0.65)",
     paddingHorizontal: 18,
     paddingVertical: 8,
@@ -401,6 +431,21 @@ const styles = StyleSheet.create({
     fontFamily: "PlusJakartaSans-ExtraBold",
     fontSize: 14,
     color: "#FFFFFF",
+  },
+  removePhotoButton: {
+    width: 34,
+    height: 34,
+    backgroundColor: "#E14E3E",
+    borderRadius: 17,
+    borderWidth: 1,
+    borderColor: "#FFFFFF",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  removePhotoText: {
+    fontSize: 16,
+    color: "#FFFFFF",
+    fontWeight: "bold",
   },
   labelRow: {
     flexDirection: "row",
