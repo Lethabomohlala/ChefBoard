@@ -17,7 +17,7 @@ import { useMenu } from "../../MenuContext";
 
 export default function Add() {
   const router = useRouter();
-  const { id } = useLocalSearchParams();
+  const { id, t } = useLocalSearchParams();
   const { menuItems, addMenuItem, updateMenuItem } = useMenu();
 
   const editId = Array.isArray(id) ? id[0] : id;
@@ -34,9 +34,9 @@ export default function Add() {
 
   const courses = ["Starter", "Main Course", "Dessert"];
 
-  // Reset or pre-fill form whenever the route `id` changes (or clears)
+  // Clear/pre-fill whenever `editId` or `t` (timestamp) changes
   useEffect(() => {
-    if (existingItem) {
+    if (editId && existingItem) {
       setDishName(existingItem.dishName);
       setDescription(existingItem.description);
       setCourse(existingItem.course);
@@ -49,7 +49,7 @@ export default function Add() {
       setPrice("");
       setPhoto(null);
     }
-  }, [editId, existingItem]);
+  }, [editId, t, existingItem]);
 
   // Handle description change with max 500 chars and first-letter capitalization
   const handleDescriptionChange = (text: string) => {

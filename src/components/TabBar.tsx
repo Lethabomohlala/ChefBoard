@@ -47,7 +47,15 @@ export default function TabBar({ state, descriptors, navigation }: any) {
               return;
             }
 
-            router.push(route.name as any);
+            // If clicking the 'add' tab, pass a timestamp `t` to clear the form
+            if (route.name === "add") {
+              router.push({
+                pathname: "/(tabs)/add",
+                params: { id: undefined, t: Date.now() },
+              });
+            } else {
+              router.push(route.name as any);
+            }
           };
 
           return (

@@ -209,7 +209,7 @@ export default function Home() {
           <Text style={styles.sectionHeading}>ALL MENU ITEMS</Text>
           <Pressable
             style={styles.smallAddButton}
-            onPress={() => router.push("/(tabs)/add")}
+            onPress={() => router.push({ pathname: "/(tabs)/add", params: { id: undefined, t: Date.now() } })}
           >
             <Text style={styles.plus}>+</Text>
           </Pressable>
