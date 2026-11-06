@@ -228,7 +228,7 @@ ChefBoard will undergo ongoing development past its current release, with future
 
 ### Long-term
 - **Menu Export |** Allow chefs to export menus as PDFs or shareable backups.
-- **Cloud Synchronization | ** Synchronize menu data across multiple kitchen devices.
+- **Cloud Synchronization |** Synchronize menu data across multiple kitchen devices.
 - **User Accounts |** Support individual chef profiles and personalized portfolios.
 - **Advanced Analytics |** Provide deeper insights into ingredient costs and menu profitability.
 - **App Store Preparation |** Finalize promotional assets, privacy policies, and store listings.
