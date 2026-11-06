@@ -136,9 +136,9 @@ export default function More() {
           <View style={styles.aboutCard}>
             <Text style={styles.aboutHeading}>CHEFBOARD MENU MANAGER</Text>
             <Text style={styles.aboutText}>
-              Designed for professional chefs, culinary creators, and artisanal
-              bakers. ChefBoard empowers you to craft, structure, and analyze
-              your gourmet recipes and menus with precision, elegance, and ease.
+              ChefBoard is a all-in-one mobile menu management app designed for professional chefs, 
+              culinary creators, and bakers. It streamlines kitchen operations by allowing users to build, 
+              organize, scale, and analyze the cost of gourmet recipes and menus from a single, intuitive interface.
             </Text>
             <Text style={styles.aboutSubText}>
               Version 1.0.0 • Built with Expo
