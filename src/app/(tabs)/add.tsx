@@ -60,6 +60,16 @@ export default function Add() {
     }
   };
 
+  // Handle price change to normalize commas to dots and prevent multiple decimals
+  const handlePriceChange = (text: string) => {
+    let formatted = text.replace(/,/g, ".");
+    const parts = formatted.split(".");
+    if (parts.length > 2) {
+      formatted = parts[0] + "." + parts.slice(1).join("");
+    }
+    setPrice(formatted);
+  };
+
   // SAVE OR UPDATE DISH
   const saveDish = () => {
     const cleanedPrice = price.replace(/R/gi, "").trim();
@@ -321,10 +331,10 @@ export default function Add() {
 
         <TextInput
           style={styles.input}
-          placeholder="WHAT'S THE DAMAGE?"
+          placeholder="WHAT'S THE DAMAGE? (e.g. 90.00)"
           placeholderTextColor="#B4B6BE"
           value={price}
-          onChangeText={setPrice}
+          onChangeText={handlePriceChange}
           keyboardType="decimal-pad"
         />
 
