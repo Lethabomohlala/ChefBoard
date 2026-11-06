@@ -2,7 +2,7 @@
 
 ### v1.0.0 | 06 November 2026
 
-### Added 
+### Added
 
 #### Navigation & Routing |
 
@@ -27,7 +27,7 @@
 - Added search TextInput capped at 50 characters with auto-capitalization.
 - Addition to image assets.
 
-### Updated 
+### Updated
 
 #### UI, Layout & Styling |
 
@@ -54,7 +54,7 @@
 
 - Updated README.md to reflect current project setup, feature additions, and system workflows.
 
-### Fixed 
+### Fixed
 
 #### Component & Routing Fixes |
 
